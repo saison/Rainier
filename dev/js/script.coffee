@@ -38,7 +38,7 @@ $ ->
     bgColor = $("#wrapper").data("color")
     $("#data11 span.color").text(bgColor)
 
-    if Math.abs(xg) >= 8
+    if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
       $("#data12 span.flash").text("start")
       $("#wrapper").fadeOut 100, ->
         $(this).fadeIn 100
