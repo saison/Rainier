@@ -1,26 +1,4 @@
 $ ->
-  # Shake Motion
-  count = 0
-  $("#data10 span.num").text(count)
-  $(@).gShake ->
-    count++
-    $("#data10 span.num").text(count)
-
-    color = count % 4
-
-    if color == 0
-      $("#wrapper").css
-        background : "#ff64af"
-    else if color == 1
-      $("#wrapper").css
-        background : "#40c8fe"
-    else if color == 2
-      $("#wrapper").css
-        background : "#ff8d41"
-    else if color == 3
-      $("#wrapper").css
-        background : "#ffffff"
-
   # Device Motion
   window.addEventListener "devicemotion", ((evt) ->
 
@@ -57,9 +35,47 @@ $ ->
       top: "+=" + yg * -2 + "px"
       left: "+=" + xg * 2 + "px"
 
+    bgColor = $("#wrapper").data("color")
+    $("#data11 span.color").text(bgColor)
+
+    if Math.abs(xg) >= 8
+      $("#data12 span.flash").text("start")
+      $("#wrapper").fadeOut 100, ->
+        $(this).fadeIn 100
+        return
+      return
+    else
+      $("#data12 span.flash").text("end")
+      $("#wrapper").stop().fadeIn 100
     return
 
   ), true
+
+  # Shake Motion
+  count = 0
+  $("#data10 span.num").text(count)
+  $(@).gShake ->
+    count++
+    $("#data10 span.num").text(count)
+
+    color = count % 4
+
+    if color == 0
+      $("#wrapper").css
+        background : "#ff64af"
+      $("#wrapper").data("color","#ff64af")
+    else if color == 1
+      $("#wrapper").css
+        background : "#40c8fe"
+      $("#wrapper").data("color","#40c8fe")
+    else if color == 2
+      $("#wrapper").css
+        background : "#ff8d41"
+      $("#wrapper").data("color","#ff8d41")
+    else if color == 3
+      $("#wrapper").css
+        background : "#ffffff"
+      $("#wrapper").data("color","#ffffff")
 
   # Voice Audio
   $("#voiceTest").click ->

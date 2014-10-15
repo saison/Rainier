@@ -9,7 +9,7 @@ head
   script(src="js/script.js")
   title KIX MIX
 body
-  #wrapper
+  #wrapper(data-color="#ffffff")
     p#point
     a#voiceTest
       Voice
@@ -24,13 +24,13 @@ body
         |alpha :
         span.num
       #data4.data
-        |傾きz :
+        |zg :
         span.num
       #data5.data
-        |傾きy :
+        |yg :
         span.num
       #data6.data
-        |傾きx :
+        |xg :
         span.num
       #data7.data
         |z :
@@ -44,3 +44,9 @@ body
       #data10.data
         |Shake Count :
         span.num
+      #data11.data
+        |#wrapper data :
+        span.color
+      #data12.data
+        |flash point :
+        span.flash
