@@ -38,6 +38,7 @@ $ ->
     bgColor = $("#wrapper").data("color")
     $("#data11 span.color").text(bgColor)
 
+    # # Flash Function
     # if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
     #   $("#data12 span.flash").text("start")
     #   $("#wrapper").fadeOut 100, ->
@@ -57,10 +58,13 @@ $ ->
   $("#data10 span.num").text(count)
   $(@).gShake ->
     count++
+    bgColor count
+    sendBroadcast()
+
+  # bgFlash
+  bgColor = (value) ->
     $("#data10 span.num").text(count)
-
-    color = count % 4
-
+    color = value % 4
     if color == 0
       $("#wrapper").css
         background : "#ff64af"
@@ -77,6 +81,46 @@ $ ->
       $("#wrapper").css
         background : "#ffffff"
       $("#wrapper").data("color","#ffffff")
+
+  # device select
+  device = "no device"
+  if navigator.userAgent.indexOf("iPhone") > 0 or navigator.userAgent.indexOf("Android") > 0
+    device = "sp"
+  else if navigator.userAgent.indexOf('iPhone') == -1 and device.indexOf('Android') == -1
+    device = "pc"
+
+  # node socket.io
+  s = io.connect 'http://192.168.100.100:3333'
+
+  s.on "connect", -> # 接続時
+    $("#data13 span.socketLog").text "socket.io Connect"
+
+  s.on "disconnect", (client) -> # 切断時
+    $("#data13 span.socketLog").text "socket.io Disconnect"
+
+  s.on "toClient", (data) ->
+    $("#data13 span.socketLog").text "socket.io toClient"
+    $("#data14 span.toServer").text data.value
+    count = count + data.value
+    bgColor count
+    return
+
+  s.on "toAll", (data) ->
+    $("#data13 span.socketLog").text "socket.io toAll"
+    $("#data14 span.toServer").text data.value
+    return
+
+  sendBroadcast = ->
+    $ ->
+      $("#data13 span.socketLog").text "Broadcast call"
+    s.emit "toServerBroad", #サーバへ送信
+      value: 1
+    return
+
+  # socket function
+  $("a#voiceTest").click ->
+    $("#data13 span.socketLog").text "Button Push"
+    sendBroadcast();
 
   # # Voice Audio
   # $("#voiceTest").click ->
