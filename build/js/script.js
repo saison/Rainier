@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var count;
+    var bgColor, count, s, sendBroadcast;
     window.addEventListener("devicemotion", (function(evt) {
       var a, b, bgColor, g, x, xg, y, yg, z, zg;
       x = evt.acceleration.x;
@@ -30,11 +30,15 @@
     }), true);
     count = 0;
     $("#data10 span.num").text(count);
-    return $(this).gShake(function() {
-      var color;
+    $(this).gShake(function() {
       count++;
+      bgColor(count);
+      return sendBroadcast();
+    });
+    bgColor = function(value) {
+      var color;
       $("#data10 span.num").text(count);
-      color = count % 4;
+      color = value % 4;
       if (color === 0) {
         $("#wrapper").css({
           background: "#ff64af"
@@ -56,6 +60,35 @@
         });
         return $("#wrapper").data("color", "#ffffff");
       }
+    };
+    s = io.connect('http://192.168.100.100:3333');
+    s.on("connect", function() {
+      return $("#data13 span.socketLog").text("socket.io Connect");
+    });
+    s.on("disconnect", function(client) {
+      return $("#data13 span.socketLog").text("socket.io Disconnect");
+    });
+    s.on("toClient", function(data) {
+      $("#data13 span.socketLog").text("socket.io toClient");
+      $("#data14 span.toServer").text(data.value);
+      count = count + data.value;
+      bgColor(count);
+    });
+    s.on("toAll", function(data) {
+      $("#data13 span.socketLog").text("socket.io toAll");
+      $("#data14 span.toServer").text(data.value);
+    });
+    sendBroadcast = function() {
+      $(function() {
+        return $("#data13 span.socketLog").text("Broadcast call");
+      });
+      s.emit("toServerBroad", {
+        value: 1
+      });
+    };
+    return $("a#voiceTest").click(function() {
+      $("#data13 span.socketLog").text("Button Push");
+      return sendBroadcast();
     });
   });
 
