@@ -1,1 +1,62 @@
-!function t(e,a,n){function r(o,d){if(!a[o]){if(!e[o]){var c="function"==typeof require&&require;if(!d&&c)return c(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var u=a[o]={exports:{}};e[o][0].call(u.exports,function(t){var a=e[o][1][t];return r(a?a:t)},u,u.exports,t,e,a,n)}return a[o].exports}for(var i="function"==typeof require&&require,o=0;o<n.length;o++)r(n[o]);return r}({1:[function(){$(function(){var t;return t=0,$("#data10 span.num").text(t),$(this).gShake(function(){var e;return t++,$("#data10 span.num").text(t),e=t%4,0===e?$("#wrapper").css({background:"#ff64af"}):1===e?$("#wrapper").css({background:"#40c8fe"}):2===e?$("#wrapper").css({background:"#ff8d41"}):3===e?$("#wrapper").css({background:"#ffffff"}):void 0}),window.addEventListener("devicemotion",function(t){var e,a,n,r,i,o,d,c,u;r=t.acceleration.x,o=t.acceleration.y,c=t.acceleration.z,i=t.accelerationIncludingGravity.x,d=t.accelerationIncludingGravity.y,u=t.accelerationIncludingGravity.z,e=t.rotationRate.alpha,a=t.rotationRate.beta,n=t.rotationRate.gamma,$("#data1 span.num").text(n.toFixed(3)),$("#data2 span.num").text(a.toFixed(3)),$("#data3 span.num").text(e.toFixed(3)),$("#data4 span.num").text(u.toFixed(3)),$("#data5 span.num").text(d.toFixed(3)),$("#data6 span.num").text(i.toFixed(3)),$("#data7 span.num").text(c.toFixed(3)),$("#data8 span.num").text(o.toFixed(3)),$("#data9 span.num").text(r.toFixed(3)),$("p#point").css({top:"+="+-2*d+"px",left:"+="+2*i+"px"})},!0),$("#voiceTest").click(function(){return navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia,navigator.getUserMedia?navigator.getUserMedia({video:!0,audio:!0},function(t){var e;e=document.querySelector("video"),e.src=window.URL.createObjectURL(t)},function(t){alert("The following error occured: "+t)}):alert("getUserMedia not supported")})})},{}]},{},[1]);
+(function() {
+  $(function() {
+    var count;
+    window.addEventListener("devicemotion", (function(evt) {
+      var a, b, bgColor, g, x, xg, y, yg, z, zg;
+      x = evt.acceleration.x;
+      y = evt.acceleration.y;
+      z = evt.acceleration.z;
+      xg = evt.accelerationIncludingGravity.x;
+      yg = evt.accelerationIncludingGravity.y;
+      zg = evt.accelerationIncludingGravity.z;
+      a = evt.rotationRate.alpha;
+      b = evt.rotationRate.beta;
+      g = evt.rotationRate.gamma;
+      $("#data1 span.num").text(g.toFixed(3));
+      $("#data2 span.num").text(b.toFixed(3));
+      $("#data3 span.num").text(a.toFixed(3));
+      $("#data4 span.num").text(zg.toFixed(3));
+      $("#data5 span.num").text(yg.toFixed(3));
+      $("#data6 span.num").text(xg.toFixed(3));
+      $("#data7 span.num").text(z.toFixed(3));
+      $("#data8 span.num").text(y.toFixed(3));
+      $("#data9 span.num").text(x.toFixed(3));
+      $("p#point").css({
+        top: "+=" + yg * -2 + "px",
+        left: "+=" + xg * 2 + "px"
+      });
+      bgColor = $("#wrapper").data("color");
+      $("#data11 span.color").text(bgColor);
+    }), true);
+    count = 0;
+    $("#data10 span.num").text(count);
+    return $(this).gShake(function() {
+      var color;
+      count++;
+      $("#data10 span.num").text(count);
+      color = count % 4;
+      if (color === 0) {
+        $("#wrapper").css({
+          background: "#ff64af"
+        });
+        return $("#wrapper").data("color", "#ff64af");
+      } else if (color === 1) {
+        $("#wrapper").css({
+          background: "#40c8fe"
+        });
+        return $("#wrapper").data("color", "#40c8fe");
+      } else if (color === 2) {
+        $("#wrapper").css({
+          background: "#ff8d41"
+        });
+        return $("#wrapper").data("color", "#ff8d41");
+      } else if (color === 3) {
+        $("#wrapper").css({
+          background: "#ffffff"
+        });
+        return $("#wrapper").data("color", "#ffffff");
+      }
+    });
+  });
+
+}).call(this);

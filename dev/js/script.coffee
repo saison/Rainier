@@ -38,15 +38,16 @@ $ ->
     bgColor = $("#wrapper").data("color")
     $("#data11 span.color").text(bgColor)
 
-    if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
-      $("#data12 span.flash").text("start")
-      $("#wrapper").fadeOut 100, ->
-        $(this).fadeIn 100
-        return
-      return
-    else
-      $("#data12 span.flash").text("end")
-      $("#wrapper").stop().fadeIn 100
+    # if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
+    #   $("#data12 span.flash").text("start")
+    #   $("#wrapper").fadeOut 100, ->
+    #     $(this).fadeIn 100
+    #     return
+    #   return
+    # else
+    #   $("#data12 span.flash").text("end")
+    #   $("#wrapper").stop().fadeIn 100
+
     return
 
   ), true
@@ -77,24 +78,24 @@ $ ->
         background : "#ffffff"
       $("#wrapper").data("color","#ffffff")
 
-  # Voice Audio
-  $("#voiceTest").click ->
-    navigator.getUserMedia = (navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia)
-    if navigator.getUserMedia
-      navigator.getUserMedia
-        video: true
-        audio: true
-
-      , ((localMediaStream) ->
-        # successCallback
-        video = document.querySelector("video")
-        video.src = window.URL.createObjectURL(localMediaStream)
-        return
-
-      ), (err) ->
-        # errorCallback
-        alert "The following error occured: " + err
-        return
-
-    else
-      alert "getUserMedia not supported"
+  # # Voice Audio
+  # $("#voiceTest").click ->
+  #   navigator.getUserMedia = (navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia)
+  #   if navigator.getUserMedia
+  #     navigator.getUserMedia
+  #       video: true
+  #       audio: true
+  #
+  #     , ((localMediaStream) ->
+  #       # successCallback
+  #       video = document.querySelector("video")
+  #       video.src = window.URL.createObjectURL(localMediaStream)
+  #       return
+  #
+  #     ), (err) ->
+  #       # errorCallback
+  #       alert "The following error occured: " + err
+  #       return
+  #
+  #   else
+  #     alert "getUserMedia not supported"

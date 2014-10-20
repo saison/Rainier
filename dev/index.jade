@@ -6,13 +6,14 @@ head
   link(rel="stylesheet", href="css/style.css")
   script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
   script(src="js/gShake.js")
-  script(src="js/script.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="js/client.js")
+  // script(src="js/script.js")
   title KIX MIX
 body
   #wrapper(data-color="#ffffff")
     p#point
-    a#voiceTest
-      Voice
+    a#voiceTest Voice
     #debug
       #data1.data
         |gamma :
@@ -50,3 +51,9 @@ body
       #data12.data
         |flash point :
         span.flash
+      #data13.data
+        |Socket Log :
+        span.socketLog
+      #data14.data
+        |to Server :
+        span.toServer

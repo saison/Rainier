@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var compass = require('gulp-compass');
 var browserify = require('gulp-browserify');
 var jade = require('gulp-jade');
+var coffee = require('gulp-coffee');
 
 var p = {
   sass: {
@@ -16,7 +17,7 @@ var p = {
     dest:'build/css/'
   },
   scripts: {
-    coffee: 'dev/js/script.coffee',
+    coffee: 'dev/js/*.coffee',
     js: 'dev/js/script.js',
     dest: 'build/js/'
   },
@@ -52,19 +53,27 @@ gulp.task('compass', function() {
 })
 
 // Coffee
-gulp.task('browserify', function() {
+// gulp.task('browserify', function() {
+//
+//     gulp.src(p.scripts.coffee, {read: false})
+//     .pipe(plumber())
+//     .pipe(browserify({
+//       transform: ['coffeeify'],
+//       extensions: ['.coffee']
+//     }))
+//     .pipe(rename('script.js'))
+//     .pipe(uglify())
+//     .pipe(gulp.dest(p.scripts.dest))
+//     .pipe(connect.reload())
+// })
 
-    gulp.src(p.scripts.coffee, {read: false})
-    .pipe(plumber())
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
-    .pipe(rename('script.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest(p.scripts.dest))
-    .pipe(connect.reload())
-})
+// Coffee
+gulp.task("coffee", function(){
+  gulp.src(p.scripts.coffee)
+  .pipe(coffee())
+  .pipe(gulp.dest(p.scripts.dest))
+  .pipe(connect.reload())
+});
 
 // Jade
 gulp.task('jade', function() {
@@ -76,7 +85,7 @@ gulp.task('jade', function() {
 })
 
 // compile
-gulp.task('compile', ['jade', 'compass', 'browserify'], function() {
+gulp.task('compile', ['jade', 'compass', 'coffee'], function() {
   console.log('gulp compile!')
 })
 
@@ -84,10 +93,10 @@ gulp.task('compile', ['jade', 'compass', 'browserify'], function() {
 gulp.task('watch', function() {
   gulp.watch('dev/sass/**/*.scss', ['compass']);
   gulp.watch('dev/**/*.jade', ['jade']);
-  gulp.watch('dev/js/**/*.coffee', ['browserify']);
+  gulp.watch('dev/js/**/*.coffee', ['coffee']);
 })
 
 // Go
-gulp.task('default', ['connect','jade', 'compass', 'browserify', 'watch'], function() {
+gulp.task('default', ['connect','jade', 'compass', 'coffee', 'watch'], function() {
   console.log('Starting gulp!')
 })
