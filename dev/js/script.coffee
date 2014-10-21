@@ -90,7 +90,7 @@ $ ->
     device = "pc"
 
   # node socket.io
-  s = io.connect 'http://157.7.201.211:3000'
+  s = io.connect 'http://rainier.saison-lab.com:3000'
 
   s.on "connect", -> # 接続時
     $("#data13 span.socketLog").text "socket.io Connect"
