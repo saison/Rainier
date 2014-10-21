@@ -77,7 +77,7 @@
     } else if (navigator.userAgent.indexOf('iPhone') === -1 && device.indexOf('Android') === -1) {
       device = "pc";
     }
-    s = io.connect();
+    s = io.connect('http://157.7.201.211:3000');
     s.on("connect", function() {
       return $("#data13 span.socketLog").text("socket.io Connect");
     });
