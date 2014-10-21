@@ -1,6 +1,2 @@
 .sass-cache
 node_modules
-
-build/
-!build/img
-!build/js/gShake.js
