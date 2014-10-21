@@ -27,6 +27,16 @@
       });
       bgColor = $("#wrapper").data("color");
       $("#data11 span.color").text(bgColor);
+      if (Math.abs(xg) >= 8 || Math.abs(yg) <= 5) {
+        $("#data12 span.flash").text("start");
+        $("#wrapper").fadeOut(100, function() {
+          $(this).fadeIn(100);
+        });
+        return;
+      } else {
+        $("#data12 span.flash").text("end");
+        $("#wrapper").stop().fadeIn(100);
+      }
     }), true);
     count = 0;
     $("#data10 span.num").text(count);
@@ -67,7 +77,7 @@
     } else if (navigator.userAgent.indexOf('iPhone') === -1 && device.indexOf('Android') === -1) {
       device = "pc";
     }
-    s = io.connect('http://192.168.100.100:3333');
+    s = io.connect();
     s.on("connect", function() {
       return $("#data13 span.socketLog").text("socket.io Connect");
     });

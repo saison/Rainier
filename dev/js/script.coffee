@@ -38,16 +38,16 @@ $ ->
     bgColor = $("#wrapper").data("color")
     $("#data11 span.color").text(bgColor)
 
-    # # Flash Function
-    # if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
-    #   $("#data12 span.flash").text("start")
-    #   $("#wrapper").fadeOut 100, ->
-    #     $(this).fadeIn 100
-    #     return
-    #   return
-    # else
-    #   $("#data12 span.flash").text("end")
-    #   $("#wrapper").stop().fadeIn 100
+    # Flash Function
+    if Math.abs(xg) >= 8 or Math.abs(yg) <= 5
+      $("#data12 span.flash").text("start")
+      $("#wrapper").fadeOut 100, ->
+        $(this).fadeIn 100
+        return
+      return
+    else
+      $("#data12 span.flash").text("end")
+      $("#wrapper").stop().fadeIn 100
 
     return
 
@@ -90,7 +90,7 @@ $ ->
     device = "pc"
 
   # node socket.io
-  s = io.connect 'http://192.168.100.100:3333'
+  s = io.connect()
 
   s.on "connect", -> # 接続時
     $("#data13 span.socketLog").text "socket.io Connect"

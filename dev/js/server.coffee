@@ -2,7 +2,7 @@ http = require("http")
 socketIO = require("socket.io")
 
 server = http.createServer((req, res) ->
-).listen(3333)
+).listen(3000)
 
 io = socketIO.listen(server)
 

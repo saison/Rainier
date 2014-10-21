@@ -5,7 +5,7 @@
 
   socketIO = require("socket.io");
 
-  server = http.createServer(function(req, res) {}).listen(3333);
+  server = http.createServer(function(req, res) {}).listen(3000);
 
   io = socketIO.listen(server);
 
