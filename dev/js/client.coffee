@@ -1,6 +1,6 @@
 # node socket.io
 
-s = io.connect 'http://192.168.100.100:3333'
+s = io.connect ''
 
 s.on "connect", -> # 接続時
   $("#data13 span.socketLog").text "socket.io Connect"

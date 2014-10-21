@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var bgColor, count, s, sendBroadcast;
+    var bgColor, count, device, s, sendBroadcast;
     window.addEventListener("devicemotion", (function(evt) {
       var a, b, bgColor, g, x, xg, y, yg, z, zg;
       x = evt.acceleration.x;
@@ -61,6 +61,12 @@
         return $("#wrapper").data("color", "#ffffff");
       }
     };
+    device = "no device";
+    if (navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("Android") > 0) {
+      device = "sp";
+    } else if (navigator.userAgent.indexOf('iPhone') === -1 && device.indexOf('Android') === -1) {
+      device = "pc";
+    }
     s = io.connect('http://192.168.100.100:3333');
     s.on("connect", function() {
       return $("#data13 span.socketLog").text("socket.io Connect");
