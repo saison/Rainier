@@ -21,9 +21,11 @@
       });
     });
     socket.on("toServerBroad", function(data) {
+      console.log("toServerBroad");
       console.log(data);
       socket.broadcast.emit("toClient", {
-        value: data.value
+        value: data.value,
+        device: data.device
       });
     });
     socket.on("disconnect", function() {});

@@ -89,6 +89,18 @@ $ ->
   else if navigator.userAgent.indexOf('iPhone') == -1 and device.indexOf('Android') == -1
     device = "pc"
 
+  # device locat
+  if navigator.geolocation
+    navigator.geolocation.getCurrentPosition( (position) ->
+      lat = position.coords.latitude
+      lon = position.coords.longitude
+      $("#data15 span.location").text lat
+      $("#data16 span.location").text lon
+      return
+    )
+  else
+    $("#data15 span.location").text "false location"
+
   # node socket.io
   s = io.connect 'http://192.168.100.100:3333'
 
@@ -100,7 +112,7 @@ $ ->
 
   s.on "toClient", (data) ->
     $("#data13 span.socketLog").text "socket.io toClient"
-    $("#data14 span.toServer").text data.value
+    $("#data14 span.toServer").text data.value + "/" + data.device
     count = count + data.value
     bgColor count
     return
@@ -114,7 +126,10 @@ $ ->
     $ ->
       $("#data13 span.socketLog").text "Broadcast call"
     s.emit "toServerBroad", #サーバへ送信
-      value: 1
+      value: 1,
+      device: device,
+      lat: lat,
+      lon: lon
     return
 
   # socket function

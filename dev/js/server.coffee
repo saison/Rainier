@@ -20,6 +20,8 @@ io.sockets.on "connection", (socket) ->
 
   # ブロードキャスト（送信者以外の全員に送信）
   socket.on "toServerBroad", (data) ->
+    console.log "toServerBroad"
+    console.log data
     socket.broadcast.emit "toClient",
       value: data.value,
       device: data.device

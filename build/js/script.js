@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var bgColor, count, s, sendBroadcast;
+    var bgColor, count, device, s, sendBroadcast;
     window.addEventListener("devicemotion", (function(evt) {
       var a, b, bgColor, g, x, xg, y, yg, z, zg;
       x = evt.acceleration.x;
@@ -61,6 +61,23 @@
         return $("#wrapper").data("color", "#ffffff");
       }
     };
+    device = "no device";
+    if (navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("Android") > 0) {
+      device = "sp";
+    } else if (navigator.userAgent.indexOf('iPhone') === -1 && device.indexOf('Android') === -1) {
+      device = "pc";
+    }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat, lon;
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        $("#data15 span.location").text(lat);
+        $("#data16 span.location").text(lon);
+      });
+    } else {
+      $("#data15 span.location").text("false location");
+    }
     s = io.connect('http://192.168.100.100:3333');
     s.on("connect", function() {
       return $("#data13 span.socketLog").text("socket.io Connect");
@@ -70,7 +87,7 @@
     });
     s.on("toClient", function(data) {
       $("#data13 span.socketLog").text("socket.io toClient");
-      $("#data14 span.toServer").text(data.value);
+      $("#data14 span.toServer").text(data.value + "/" + data.device);
       count = count + data.value;
       bgColor(count);
     });
@@ -83,7 +100,10 @@
         return $("#data13 span.socketLog").text("Broadcast call");
       });
       s.emit("toServerBroad", {
-        value: 1
+        value: 1,
+        device: device,
+        lat: lat,
+        lon: lon
       });
     };
     return $("a#voiceTest").click(function() {
